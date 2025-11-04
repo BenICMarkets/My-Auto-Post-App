@@ -1,5 +1,6 @@
-# Generated manually for a simple Node/Express service
-app = "my-autopost-app"    # you can change this during "fly launch"
+app = "my-autopost-app"   # keep your app name
+
+primary_region = "fra"    # or your chosen region
 
 [build]
   dockerfile = "Dockerfile"
@@ -7,15 +8,9 @@ app = "my-autopost-app"    # you can change this during "fly launch"
 [env]
   PORT = "3000"
 
-[[services]]
+[http_service]
   internal_port = 3000
-  processes = ["app"]
-  protocol = "tcp"
-
-  [[services.ports]]
-    handlers = ["http"]
-    port = 80
-
-  [[services.ports]]
-    handlers = ["tls", "http"]
-    port = 443
+  force_https = true
+  auto_start_machines = true
+  auto_stop_machines = false
+  min_machines_running = 1
